@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Jsvectormap (Basic)</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  
+  <link rel="stylesheet" href="./assets/css/jsvectormap.css" />
+  <script src="./assets/js/jsvectormap.min.js"></script>
+  <script src="./assets/maps/world.js"></script>
+    <style>
+      .map{
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+</head>
+<body>
+  <div id="map" class="map"></div>
+  <script>
+    var map = new jsVectorMap({
+      map: 'world',
+      selector: '#map',
+    })
+
+    document.querySelector('#focus').addEventListener('click', () => {
+      map.setFocus({ region: 'RU', animate: true })
+    })
+  </script>
+</body>
+</html>
