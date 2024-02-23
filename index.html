@@ -11,23 +11,45 @@
   <link rel="stylesheet" href="./assets/css/jsvectormap.css" />
   <script src="./assets/js/jsvectormap.min.js"></script>
   <script src="./assets/maps/world.js"></script>
-    <style>
-      .map{
-        width: 100vw;
-        height: 100vh;
-      }
-    </style>
 </head>
 <body>
   <div id="map" class="map"></div>
-  <script>
+    <script>
+    var markers = [{"name":"Belgrade","coords":[44.82,20.46],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.6}},{"name":"Miami","coords":[25.784,-80.2101],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.2}},{"name":"Sidney","coords":[48.6506,-123.3986],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.1}},{"name":"Skopje","coords":[41.9961,21.4317],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.3}}];
+
     var map = new jsVectorMap({
       map: 'world',
       selector: '#map',
-    })
 
-    document.querySelector('#focus').addEventListener('click', () => {
-      map.setFocus({ region: 'RU', animate: true })
+      // -------- Labels --------
+      labels: {
+        markers: {
+          render: function(marker) {
+            return marker.name
+          },
+        },
+      },
+
+      // -------- Marker and label style --------
+      markers: markers,
+      markerStyle: {
+        hover: {
+          stroke: "#35373e",
+          strokeWidth: 0,
+          fill: '#35373e'
+        },
+        selected: {
+          fill: '#35373e'
+        }
+      },
+      markerLabelStyle: {
+        initial: {
+          fontFamily: 'Poppins',
+          fontSize: 13,
+          fontWeight: 500,
+          fill: '#35373e',
+        },
+      },
     })
   </script>
 </body>
