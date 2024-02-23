@@ -15,8 +15,34 @@
 <body>
   <div id="map" class="map"></div>
     <script>
-    var markers = [{"name":"Belgrade","coords":[44.82,20.46],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.6}},{"name":"Miami","coords":[25.784,-80.2101],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.2}},{"name":"Sidney","coords":[48.6506,-123.3986],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.1}},{"name":"Skopje","coords":[41.9961,21.4317],"style":{"stroke":"#FF0000","strokeWidth":2,"fill":"#FF0000","r":3.3}}];
+      function fetchJSONData(fileName) {
+            fetch(fileName)
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error
+                            (`HTTP error! Status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then((data) => { 
+                  drawMap(data);
+                })
+                .catch((error) => 
+                       console.error("Unable to fetch data:", error));
+      };
+      const tooltipTemplate = function(marker) {
+      return `
+        <span class="d-flex align-items-center mb-2">
+          <span class="h5 ms-2 mb-0">${marker.name}</span>
+        </span>
+        <div class="d-flex justify-content-between" style="max-width: 10rem;">
+          <strong>Total venues:</strong>
+          <span class="ms-2">${marker.totalVenues}</span>
+        </div>
+      `;
+    };
 
+      function drawMap(markers) {
     var map = new jsVectorMap({
       map: 'world',
       selector: '#map',
@@ -30,16 +56,22 @@
         },
       },
 
+      onMarkerTooltipShow: function (map, tooltip, code) {
+        tooltip._tooltip.style.display = null;
+        tooltip._tooltip.innerHTML = tooltipTemplate(markers[code]);
+      },
+      
+
       // -------- Marker and label style --------
       markers: markers,
       markerStyle: {
         hover: {
-          stroke: "#35373e",
+          stroke: "#005FE6",
           strokeWidth: 0,
-          fill: '#35373e'
+          fill: '#005FE6'
         },
         selected: {
-          fill: '#35373e'
+          fill: '#005FE6'
         }
       },
       markerLabelStyle: {
@@ -47,10 +79,12 @@
           fontFamily: 'Poppins',
           fontSize: 13,
           fontWeight: 500,
-          fill: '#35373e',
+          fill: '#005FE6',
         },
       },
     })
+      };
+      fetchJSONData('./markers.json');
   </script>
 </body>
 </html>

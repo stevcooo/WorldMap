@@ -17,7 +17,7 @@ body {
   width: 100vw !important;
   height: 100vh !important;
 }
-
+/* 
 circle {
   animation: pulse-animate 3s ease 1s infinite normal forwards;
 }
@@ -32,4 +32,4 @@ circle {
 	75% {
 		opacity: 0;
 	}
-}
+} */
